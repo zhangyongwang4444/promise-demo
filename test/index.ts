@@ -45,14 +45,11 @@ describe('Promise', () => {
         let called = false
         const promise = new Promise((resolve, reject) => {
             assert(called === false)
-            console.log('--resolve--还没执行')
             resolve()
-            console.log("--resolve--代码执行了")
             setTimeout(() => {
                 assert(called === true)
                 done()
             })
-            console.log("--then中success--代码执行了")
         })
         //@ts-ignore
         promise.then(() => {
