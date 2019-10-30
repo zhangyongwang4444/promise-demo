@@ -106,5 +106,17 @@ describe('Promise', () => {
         })
         promise.then(null, fail)
     })
+    it('2.2.4 在我的代码执行完之前，不得调用 then 后面的两函数', (done) => {
+        const succeed = sinon.fake()
+        const promise = new Promise((resolve) => {
+            resolve()
+        })
+        promise.then(succeed)
+        assert.isFalse(succeed.called)
+        setTimeout(() => {
+            assert.isTrue(succeed.called)
+            done()
+        }, 0)
+    })
 })
 
