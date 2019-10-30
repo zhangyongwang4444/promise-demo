@@ -79,9 +79,10 @@ describe('Promise', () => {
         const promise = new Promise((resolve) => {
             assert.isFalse(succeed.called)
             resolve(233) // 233 就是 promise 的值
+            resolve(23333)
             setTimeout(() => {
                 assert(promise.state === "fulfilled")
-                assert.isTrue(succeed.called)
+                assert.isTrue(succeed.calledOnce)
                 assert(succeed.calledWith(233))
                 done()
             }, 0)

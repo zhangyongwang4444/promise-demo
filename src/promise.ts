@@ -3,15 +3,17 @@ class Promise2 {
     fail = null;
     state = "pending"
     resolve(result) {
+        if (this.state !== "pending") return
+        this.state = "fulfilled"
         setTimeout(() => {
-            this.state = "fulfilled"
             if (typeof this.succeed === "function")
                 this.succeed(result)
         }, 0)
     }
     reject(reason) {
+        if (this.state !== "pending") return
+        this.state = "rejected"
         setTimeout(() => {
-            this.state = "rejected"
             if (typeof this.fail === "function")
                 this.fail(reason)
         }, 0)
