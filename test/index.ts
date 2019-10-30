@@ -90,5 +90,21 @@ describe('Promise', () => {
         })
         promise.then(succeed)
     })
+    it('2.2.3', (done) => {
+        const fail = sinon.fake()
+        const promise = new Promise((resolve, reject) => {
+            assert.isFalse(fail.called)
+            reject(233) // 233 就是 promise 的值
+            reject(23333)
+            setTimeout(() => {
+                assert(promise.state === "rejected")
+                assert.isTrue(fail.calledOnce)
+                assert(fail.calledWith(233))
+                done()
+            }, 0)
+
+        })
+        promise.then(null, fail)
+    })
 })
 
