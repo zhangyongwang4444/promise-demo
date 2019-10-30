@@ -67,5 +67,27 @@ describe('Promise', () => {
         //@ts-ignore
         promise.then(null, fail)
     })
+    it('2.2.1', () => {
+        const promise = new Promise((resolve) => {
+            resolve()
+        })
+        promise.then(false, null)
+        assert(1 === 1)
+    })
+    it('2.2.2', (done) => {
+        const succeed = sinon.fake()
+        const promise = new Promise((resolve) => {
+            assert.isFalse(succeed.called)
+            resolve(233) // 233 就是 promise 的值
+            setTimeout(() => {
+                assert(promise.state === "fulfilled")
+                assert.isTrue(succeed.called)
+                assert(succeed.calledWith(233))
+                done()
+            }, 0)
+
+        })
+        promise.then(succeed)
+    })
 })
 
