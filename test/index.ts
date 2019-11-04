@@ -192,4 +192,17 @@ describe('Promise', () => {
                 done()
             })
     })
+    it("2.2.7.1.2 x 是一个 Promise 实例", (done) => {
+        const promise1 = new Promise((resolve, reject) => {
+            resolve()
+        })
+        const fn = sinon.fake()
+        const promise2 = promise1.then(
+            /*s1*/() => new Promise(resolve => resolve()), () => { })
+        promise2.then(fn)
+        setTimeout(() => {
+            assert(fn.called)
+            done()
+        }, 10)
+    })
 })
